@@ -25,6 +25,15 @@ type Data struct {
     contact         string
 }
 
+type Data_CAB struct {
+    job_number string
+}
+
+type Data_Print struct {
+    job_number string
+    po         string
+}
+
 func Receive_data() *Data {
     job_number := question("请输入工单号: ")
 
@@ -75,4 +84,24 @@ func question(q string) string {
     }
     inputData = strings.Trim(inputData, "\n")
     return inputData
+}
+
+func Receive_Print() *Data_Print {
+    job_number := question("请输入工单号: ")
+
+    po := question("请输入订单 ")
+    job := &Data_Print{
+        job_number,
+        po,
+    }
+    return job
+}
+
+func Receive_CAB() *Data_CAB {
+    job_number := question("请输入工单号: ")
+
+    job := &Data_CAB{
+        job_number,
+    }
+    return job
 }
