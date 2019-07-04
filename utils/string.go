@@ -10,8 +10,9 @@ func FirstLtterToUpper(str string) string {
     }
     strArry := []rune(strings.ToLower(strings.Trim(str, " ")))
     strArry[0]-=32
+    
     for i,ch := range strArry{
-        if string(ch)==" " && string(strArry[i+1])!="(" {
+        if string(ch)==" " && strArry[i+1]>=96 && strArry[i+1]<=122 {
             
             strArry[i+1]-=32
         }
