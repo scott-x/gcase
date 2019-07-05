@@ -2,25 +2,32 @@ package engine
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/scott-x/gcase/model"
 	"github.com/scott-x/gcase/parse"
 	"github.com/scott-x/gcase/utils"
 	"os"
 	"strings"
+	"github.com/fatih/color"
 )
 
 func Run() {
 	inputReader := bufio.NewReader(os.Stdin)
-	fmt.Println("Please enter your job type (1-6):")
-	fmt.Println(" 1. USA ")
-	fmt.Println(" 2. CAN")
-	fmt.Println(" 3. CAB")
-	fmt.Println(" 4. LNC")
-	fmt.Println(" 5. PRINT")
-	fmt.Println(" 6. OTHER")
 
-	fmt.Printf("My Selection is : ")
+	red := color.New(color.FgRed)
+	boldRed := red.Add(color.Bold)
+
+	green := color.New(color.FgGreen)
+	boldGreen := green.Add(color.Bold)
+
+	boldGreen.Println("Please enter your job type (1-6):")
+	color.Cyan(" 1. USA ")
+	color.Cyan(" 2. CAN")
+	color.Cyan(" 3. CAB")
+	color.Cyan(" 4. LNC")
+	color.Cyan(" 5. PRINT")
+	color.Cyan(" 6. OTHER")
+
+	boldRed.Printf("My Selection is : ")
 	input, err := inputReader.ReadString('\n')
 	if err != nil {
 		panic(err)
@@ -28,24 +35,29 @@ func Run() {
 	input = strings.Trim(input, "\n")
 	switch input {
 	case "1":
-		Copy(parse.Write_Data(model.GetCase("USA")))
+		Copy(parse.Write_Data(model.GetCase("USA"),1))
 	case "2":
-		Copy(parse.Write_Data(model.GetCase("CAN")))
+		Copy(parse.Write_Data(model.GetCase("CAN"),2))
 	case "3":
-		Copy(parse.Write_CAB(model.GetCase("CAB")))
+		Copy(parse.Write_CAB(model.GetCase("CAB"),3))
 	case "4":
-		Copy(parse.Write_Data(model.GetCase("LNC")))
+		Copy(parse.Write_Data(model.GetCase("LNC"),4))
 	case "5":
-		Copy(parse.Write_Print(model.GetCase("PRINT")))
+		Copy(parse.Write_Print(model.GetCase("PRINT"),5))
 	case "6":
-		Copy(parse.Write_Data(model.GetCase("OTHER")))
+		Copy(parse.Write_Data(model.GetCase("OTHER"),6))
 	default:
-		fmt.Println("Type Error: Please input numer 1-5")
+		boldRed.Printf("Type Error: Please input numer 1-5")
 	}
 
 }
 
 func Copy(s1, s2 string) {
+	green := color.New(color.FgGreen)
+	boldGreen := green.Add(color.Bold)
+	red := color.New(color.FgRed)
+	boldRed := red.Add(color.Bold)
+	
 	project_folder := "/Users/scottxiong/go/src/github.com/scott-x/gcase"
 	copyError := utils.CopyFolder(s1, s2)
 	if copyError != nil {
@@ -55,5 +67,7 @@ func Copy(s1, s2 string) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Job: "+strings.Trim(s2,"./")+ " was created successfully ^__^")
+	boldGreen.Printf("Job: ")
+	boldRed.Printf(strings.Trim(s2,"./"))
+	boldGreen.Printf(" was created successfully ^_^")
 }

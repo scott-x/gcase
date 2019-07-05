@@ -10,7 +10,7 @@ import (
 )
 
 const project_folder = "/Users/scottxiong/go/src/github.com/scott-x/gcase"
-func Write_Data(c model.Case) (s1, s2 string) {
+func Write_Data(c model.Case, n int) (s1, s2 string) {
   //project_folder := utils.Dir() //返回的是main方法的目录 也是当前命令行的执行目录，所以这里需写死
   //fmt.Printf("project_folder: %s", project_folder)
   // s,err :=exec.Command("pwd").Output()
@@ -26,7 +26,7 @@ func Write_Data(c model.Case) (s1, s2 string) {
   }
 
   //fmt.Printf("copy folder from %s to %s", from, to)
-  job := Receive_data()
+  job := Receive_data(n)
   //fmt.Println(job)
   // //rename file
   oldFile := project_folder + "/temp/" + c.Folder + "/" + c.Pf
@@ -84,7 +84,10 @@ func Write_Data(c model.Case) (s1, s2 string) {
   //supplier string
   file.Sheet["任务单"].Rows[5].Cells[7].SetString("Supplier: " + utils.FirstLtterToUpper(job.supplier))
   //buyer string
-  file.Sheet["任务单"].Rows[6].Cells[7].SetString("Buyer: " + utils.FirstLtterToUpper(job.buyer) + " (" + strings.ToUpper(job.dep) + ") ")
+  if len(job.buyer)==0 || len(job.dep)==0 {
+  }else{
+      file.Sheet["任务单"].Rows[6].Cells[7].SetString("Buyer: " + utils.FirstLtterToUpper(job.buyer) + " (" + strings.ToUpper(job.dep) + ") ")
+  }
   //due string
   file.Sheet["任务单"].Rows[7].Cells[7].SetString("Artwork due date: " + job.due)
   //packout string
@@ -100,7 +103,7 @@ func Write_Data(c model.Case) (s1, s2 string) {
   return newFolder, "./" + strings.ToUpper(job.job_number) + " 做稿"
 }
 
-func Write_Print(c model.Case) (s1, s2 string) {
+func Write_Print(c model.Case,n int) (s1, s2 string) {
   //project_folder := utils.Dir() //返回的是main方法的目录
   //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
@@ -111,7 +114,7 @@ func Write_Print(c model.Case) (s1, s2 string) {
   }
 
   //fmt.Printf("copy folder from %s to %s", from, to)
-  job := Receive_Print()
+  job := Receive_Print(n)
   //fmt.Println(job)
   // //rename file
   oldFile := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/")+ "/" + c.Pf
@@ -162,10 +165,10 @@ func Write_Print(c model.Case) (s1, s2 string) {
   file.Sheet["任务单"].Rows[4].Cells[0].SetString(string(time.Now().Format("01/02/2006")))
 
   //copy
-  return newFolder, "./" + strings.ToUpper(job.job_number) + " 做稿"
+  return newFolder, "./" + strings.ToUpper(job.job_number) 
 }
 
-func Write_CAB(c model.Case) (s1, s2 string) {
+func Write_CAB(c model.Case, n int) (s1, s2 string) {
   //project_folder := utils.Dir() //返回的是main方法的目录
   //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
@@ -176,7 +179,7 @@ func Write_CAB(c model.Case) (s1, s2 string) {
   }
 
   //fmt.Printf("copy folder from %s to %s", from, to)
-  job := Receive_CAB()
+  job := Receive_CAB(n)
   //fmt.Println(job)
   // //rename file
   oldFile := project_folder + "/temp/" + c.Folder + "/" + c.Pf

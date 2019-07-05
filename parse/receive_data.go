@@ -2,11 +2,10 @@ package parse
 
 import (
     "bufio"
-    "fmt"
     "os"
     "strings"
-    //"github.com/tealeg/xlsx"
-    //"time"
+    "github.com/fatih/color"
+    "regexp"
 )
 
 type Data struct {
@@ -34,17 +33,68 @@ type Data_Print struct {
     po         string
 }
 
-func Receive_data() *Data {
+func check_job(re,s string) bool{
+  Re := regexp.MustCompile(re)
+  match := Re.FindString(s)
+  if len(match) > 0 {
+    return true
+  }else{
+    return false
+  }
+}
+
+func Receive_data(n int) *Data {
     job_number := question("请输入工单号: ")
+    switch n{
+    case 1:
+        re :=`[Uu][12][980][01][0-9][0-9a-zA-Z][0-9]_[a-zA-z]{3}`
+        for {
+            if check_job(re,job_number) {
+               break
+            }else{
+              job_number = question("请输入正确的工单号: ")
+            }
+        }
+    case 2:
+        re :=`[Cc][12][980][01][0-9][0-9a-zA-Z][0-9]_[a-zA-z]{3}`
+        for {
+            if check_job(re,job_number) {
+               break
+            }else{
+              job_number = question("请输入正确的工单号: ")
+            }
+        }
+    case 4:
+        re :=`[Bb][12][980][01][0-9][0-9a-zA-Z][0-9]_[Ll][Nn][Cc]`
+        for {
+            if check_job(re,job_number) {
+               break
+            }else{
+              job_number = question("请输入正确的工单号: ")
+            }
+        }
+    case 6:
+        re :=`[Bb][12][980][01][0-9][0-9a-zA-Z][0-9]_[a-zA-z]{3}`
+        for {
+            if check_job(re,job_number) {
+               break
+            }else{
+              job_number = question("请输入正确的工单号: ")
+            }
+        }
+                
+    }
 
     short_brand := question("请输入系列简称: ")
-
-    _, ok := GetBrand()[strings.ToUpper(short_brand)] /*如果确定是真实的,则存在,否则不存在 */
     /*fmt.Println(capital) */
     /*fmt.Println(ok) */
-    if ok {
-    } else {
-        fmt.Println("请输入正确简写格式的brand……")
+    for{
+        _, ok := GetBrand()[strings.ToUpper(short_brand)] /*如果确定是真实的,则存在,否则不存在 */
+        if ok {
+            break
+        } else {
+            short_brand = question("请输入正确的系列简称: ")
+        }
     }
 
     country := question("国家（eg USA, India）: ")
@@ -76,8 +126,11 @@ func Receive_data() *Data {
 }
 
 func question(q string) string {
+    cyan := color.New(color.FgCyan)
+    boldCyan := cyan.Add(color.Bold)
     inputReader := bufio.NewReader(os.Stdin)
-    fmt.Printf(q)
+ 
+    boldCyan.Printf(q)
     inputData, err := inputReader.ReadString('\n')
     if err != nil {
         panic(err)
@@ -86,10 +139,22 @@ func question(q string) string {
     return inputData
 }
 
-func Receive_Print() *Data_Print {
+func Receive_Print(n int) *Data_Print {
     job_number := question("请输入工单号: ")
-
-    po := question("请输入订单 ")
+    
+    switch n {
+    case 5:
+        re :=`[Pp][12][980][01][0-9][0-9a-zA-Z][0-9]_[Ll][Nn][Cc]`
+        for {
+            if check_job(re,job_number) {
+               break
+            }else{
+              job_number = question("请输入正确的工单号: ")
+            }
+        }
+        
+    }
+    po := question("请输入订单(PO): ")
     job := &Data_Print{
         job_number,
         po,
@@ -97,9 +162,20 @@ func Receive_Print() *Data_Print {
     return job
 }
 
-func Receive_CAB() *Data_CAB {
+func Receive_CAB(n int) *Data_CAB {
     job_number := question("请输入工单号: ")
-
+    switch n {
+    case 3:
+        re :=`[B][12][980][01][0-9][0-9a-zA-Z][0-9]_[Cc][Aa][Bb]`
+        for {
+            if check_job(re,job_number) {
+               break
+            }else{
+              job_number = question("请输入正确的工单号: ")
+            }
+        }
+        
+    }
     job := &Data_CAB{
         job_number,
     }
