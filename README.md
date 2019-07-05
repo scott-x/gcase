@@ -10,5 +10,5 @@ go build main.go && mv main $GOPATH/bin/gcase
 ```
 gcase
 ```
-### A IMAGE FOR OVERVIEW
+### AN IMAGE FOR OVERVIEW
 ![](./imgs/1.png)
