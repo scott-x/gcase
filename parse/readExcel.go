@@ -1,7 +1,6 @@
 package parse
 
 import (
-  "fmt"
   "github.com/scott-x/gcase/model"
   "github.com/scott-x/gcase/utils"
   "github.com/tealeg/xlsx"
@@ -12,7 +11,7 @@ import (
 
 func Write_Data(c model.Case) (s1, s2 string) {
   project_folder := utils.Dir() //返回的是main方法的目录
-  fmt.Printf("project_folder: %s", project_folder)
+  //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
   to := path.Join(project_folder, "temp/"+c.Folder)
   err := utils.CopyFolder(from, to)
@@ -20,9 +19,9 @@ func Write_Data(c model.Case) (s1, s2 string) {
     panic(err)
   }
 
-  fmt.Printf("copy folder from %s to %s", from, to)
+  //fmt.Printf("copy folder from %s to %s", from, to)
   job := Receive_data()
-  fmt.Println(job)
+  //fmt.Println(job)
   // //rename file
   oldFile := project_folder + "/temp/" + c.Folder + "/" + c.Pf
   newFile := project_folder + "/temp/" + c.Folder + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
@@ -30,12 +29,12 @@ func Write_Data(c model.Case) (s1, s2 string) {
   if error != nil {
     panic(error)
   }
-  fmt.Printf("rename file %s done", oldFile)
+  //fmt.Printf("rename file %s done", oldFile)
   //rename folder
   oldFolder := project_folder + "/temp/" + c.Folder
   newFolder := project_folder + "/temp/" + strings.ToUpper(job.job_number) + " 做稿"
   error1 := utils.Rename(oldFolder, newFolder)
-  fmt.Printf("rename folder %s done", oldFolder)
+  //fmt.Printf("rename folder %s done", oldFolder)
   if error1 != nil {
     panic(error1)
   }
@@ -97,42 +96,42 @@ func Write_Data(c model.Case) (s1, s2 string) {
 
 func Write_Print(c model.Case) (s1, s2 string) {
   project_folder := utils.Dir() //返回的是main方法的目录
-  fmt.Printf("project_folder: %s", project_folder)
+  //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
-  to := path.Join(project_folder, "temp/"+c.Folder)
+  to := path.Join(project_folder, "temp/"+strings.Trim(c.Folder,"印刷/"))
   err := utils.CopyFolder(from, to)
   if err != nil {
     panic(err)
   }
 
-  fmt.Printf("copy folder from %s to %s", from, to)
+  //fmt.Printf("copy folder from %s to %s", from, to)
   job := Receive_Print()
-  fmt.Println(job)
+  //fmt.Println(job)
   // //rename file
-  oldFile := project_folder + "/temp/" + c.Folder + "/" + c.Pf
-  newFile := project_folder + "/temp/" + c.Folder + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
+  oldFile := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/")+ "/" + c.Pf
+  newFile := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/") + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
   error := utils.Rename(oldFile, newFile)
   if error != nil {
     panic(error)
   }
-  fmt.Printf("rename file %s done", oldFile)
+  //fmt.Printf("rename file %s done", oldFile)
   //rename folder
-  oldFolder := project_folder + "/temp/" + c.Folder
+  oldFolder := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/")
   newFolder := project_folder + "/temp/" + strings.ToUpper(job.job_number)
   error1 := utils.Rename(oldFolder, newFolder)
-  fmt.Printf("rename folder %s done", oldFolder)
+  //fmt.Printf("rename folder %s done", oldFolder)
   if error1 != nil {
     panic(error1)
   }
   // 再新建2个当天日期的空目录
   todayDateFoler := time.Now().Format("0102")
   //folder1 := path.Join(project_folder, "temp/"+strings.ToUpper(job.job_number)+" 做稿/1 intake sheet & order/"+string(todayDateFoler))
-  folder2 := path.Join(project_folder, "temp/"+c.Folder+c.Pf+"/3报价单或订单/"+string(todayDateFoler))
+  folder2 := path.Join(project_folder, "temp/"+strings.ToUpper(job.job_number)+"/3报价单或订单/"+string(todayDateFoler))
   //utils.CreateDirIfNotExist(folder1)
   utils.CreateDirIfNotExist(folder2)
 
   //开始写数据
-  newFile = project_folder + "/temp/" + strings.ToUpper(job.job_number) + " 做稿/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
+  newFile = project_folder + "/temp/" + strings.ToUpper(job.job_number) +"/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
   file, error := xlsx.OpenFile(newFile)
 
   if error != nil {
@@ -162,7 +161,7 @@ func Write_Print(c model.Case) (s1, s2 string) {
 
 func Write_CAB(c model.Case) (s1, s2 string) {
   project_folder := utils.Dir() //返回的是main方法的目录
-  fmt.Printf("project_folder: %s", project_folder)
+  //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
   to := path.Join(project_folder, "temp/"+c.Folder)
   err := utils.CopyFolder(from, to)
@@ -170,9 +169,9 @@ func Write_CAB(c model.Case) (s1, s2 string) {
     panic(err)
   }
 
-  fmt.Printf("copy folder from %s to %s", from, to)
+  //fmt.Printf("copy folder from %s to %s", from, to)
   job := Receive_CAB()
-  fmt.Println(job)
+  //fmt.Println(job)
   // //rename file
   oldFile := project_folder + "/temp/" + c.Folder + "/" + c.Pf
   newFile := project_folder + "/temp/" + c.Folder + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
@@ -180,12 +179,12 @@ func Write_CAB(c model.Case) (s1, s2 string) {
   if error != nil {
     panic(error)
   }
-  fmt.Printf("rename file %s done", oldFile)
+  //fmt.Printf("rename file %s done", oldFile)
   //rename folder
   oldFolder := project_folder + "/temp/" + c.Folder
   newFolder := project_folder + "/temp/" + strings.ToUpper(job.job_number) + " 做稿"
   error1 := utils.Rename(oldFolder, newFolder)
-  fmt.Printf("rename folder %s done", oldFolder)
+  //fmt.Printf("rename folder %s done", oldFolder)
   if error1 != nil {
     panic(error1)
   }

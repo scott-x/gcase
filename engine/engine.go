@@ -12,7 +12,7 @@ import (
 
 func Run() {
 	inputReader := bufio.NewReader(os.Stdin)
-	fmt.Println("Please enter your job type (1-5):")
+	fmt.Println("Please enter your job type (1-6):")
 	fmt.Println(" 1. USA ")
 	fmt.Println(" 2. CAN")
 	fmt.Println(" 3. CAB")
@@ -54,4 +54,5 @@ func Copy(s1, s2 string) {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Job: "+strings.Trim(s2,"./")+ " was created successfully ^__^")
 }
