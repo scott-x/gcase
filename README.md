@@ -3,7 +3,7 @@ A cli written with golang to generator daily jobs
 ### install
 ```
 git clone https://github.com/scott-x/gcase.git
-# 编译前需手动修改parse/readExcel.go中的project_folder
+# before building you should modify the variable project_folder in parse/readExcel.go
 go build main.go && mv main $GOPATH/bin/gcase
 ```
 ### useage
