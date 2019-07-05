@@ -46,11 +46,12 @@ func Run() {
 }
 
 func Copy(s1, s2 string) {
+	project_folder := "/Users/scottxiong/go/src/github.com/scott-x/gcase"
 	copyError := utils.CopyFolder(s1, s2)
 	if copyError != nil {
 		panic(copyError)
 	}
-	err := os.RemoveAll("./temp")
+	err := os.RemoveAll(project_folder+"/temp")
 	if err != nil {
 		panic(err)
 	}
