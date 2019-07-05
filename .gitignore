@@ -2,3 +2,5 @@
 *.log*
 temp
 *做稿
+go.mod
+go.sum
