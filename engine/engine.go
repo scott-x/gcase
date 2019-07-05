@@ -69,5 +69,5 @@ func Copy(s1, s2 string) {
 	}
 	boldGreen.Printf("Job: ")
 	boldRed.Printf(strings.Trim(s2,"./"))
-	boldGreen.Printf(" was created successfully ^_^")
+	boldGreen.Printf(" was created successfully ^_^\n")
 }
