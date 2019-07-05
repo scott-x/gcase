@@ -2,6 +2,7 @@ package utils
 
 import (
 	"strings"
+    "unicode"
 )
 
 func FirstLtterToUpper(str string) string {
@@ -12,7 +13,7 @@ func FirstLtterToUpper(str string) string {
     strArry[0]-=32
     
     for i,ch := range strArry{
-        if string(ch)==" " && strArry[i+1]>=96 && strArry[i+1]<=122 {
+        if string(ch)==" " && unicode.IsLetter(strArry[i+1]){
             
             strArry[i+1]-=32
         }

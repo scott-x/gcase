@@ -9,6 +9,7 @@ import (
   "time"
 )
 
+const project_folder = "/Users/scottxiong/go/src/github.com/scott-x/gcase"
 func Write_Data(c model.Case) (s1, s2 string) {
   //project_folder := utils.Dir() //返回的是main方法的目录 也是当前命令行的执行目录，所以这里需写死
   //fmt.Printf("project_folder: %s", project_folder)
@@ -16,8 +17,7 @@ func Write_Data(c model.Case) (s1, s2 string) {
   // if err!=nil{
   //   panic(err)
   // }
-  project_folder := "/Users/scottxiong/go/src/github.com/scott-x/gcase"
-
+  
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
   to := path.Join(project_folder, "temp/"+c.Folder)
   err := utils.CopyFolder(from, to)
@@ -101,7 +101,7 @@ func Write_Data(c model.Case) (s1, s2 string) {
 }
 
 func Write_Print(c model.Case) (s1, s2 string) {
-  project_folder := utils.Dir() //返回的是main方法的目录
+  //project_folder := utils.Dir() //返回的是main方法的目录
   //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
   to := path.Join(project_folder, "temp/"+strings.Trim(c.Folder,"印刷/"))
@@ -166,7 +166,7 @@ func Write_Print(c model.Case) (s1, s2 string) {
 }
 
 func Write_CAB(c model.Case) (s1, s2 string) {
-  project_folder := utils.Dir() //返回的是main方法的目录
+  //project_folder := utils.Dir() //返回的是main方法的目录
   //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
   to := path.Join(project_folder, "temp/"+c.Folder)
