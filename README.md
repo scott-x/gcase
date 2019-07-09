@@ -4,9 +4,7 @@ A cli written with golang to generator daily jobs
 ```
 mkdir -p $GOPATH/src/github.com/scott-x
 cd $GOPATH/src/github.com/scott-x
-git clone https://github.com/scott-x/gcase.git
-# before building you should modify the variable project_folder in parse/readExcel.go & engine/engine.go
-go build main.go && mv main $GOPATH/bin/gcase
+git clone https://github.com/scott-x/gcase.git && ./build.sh
 ```
 ### useage
 ```

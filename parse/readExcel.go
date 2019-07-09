@@ -9,7 +9,8 @@ import (
   "time"
 )
 
-const project_folder = "/Users/scottxiong/go/src/github.com/scott-x/gcase"
+//const project_folder = "/Users/apple/go/src/github.com/scott-x/gcase"
+
 func Write_Data(c model.Case, n int) (s1, s2 string) {
   //project_folder := utils.Dir() //返回的是main方法的目录 也是当前命令行的执行目录，所以这里需写死
   //fmt.Printf("project_folder: %s", project_folder)
@@ -17,7 +18,7 @@ func Write_Data(c model.Case, n int) (s1, s2 string) {
   // if err!=nil{
   //   panic(err)
   // }
-  
+
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
   to := path.Join(project_folder, "temp/"+c.Folder)
   err := utils.CopyFolder(from, to)
@@ -84,9 +85,9 @@ func Write_Data(c model.Case, n int) (s1, s2 string) {
   //supplier string
   file.Sheet["任务单"].Rows[5].Cells[7].SetString("Supplier: " + utils.FirstLtterToUpper(job.supplier))
   //buyer string
-  if len(job.buyer)==0 || len(job.dep)==0 {
-  }else{
-      file.Sheet["任务单"].Rows[6].Cells[7].SetString("Buyer: " + utils.FirstLtterToUpper(job.buyer) + " (" + strings.ToUpper(job.dep) + ") ")
+  if len(job.buyer) == 0 || len(job.dep) == 0 {
+  } else {
+    file.Sheet["任务单"].Rows[6].Cells[7].SetString("Buyer: " + utils.FirstLtterToUpper(job.buyer) + " (" + strings.ToUpper(job.dep) + ") ")
   }
   //due string
   file.Sheet["任务单"].Rows[7].Cells[7].SetString("Artwork due date: " + job.due)
@@ -103,11 +104,11 @@ func Write_Data(c model.Case, n int) (s1, s2 string) {
   return newFolder, "./" + strings.ToUpper(job.job_number) + " 做稿"
 }
 
-func Write_Print(c model.Case,n int) (s1, s2 string) {
+func Write_Print(c model.Case, n int) (s1, s2 string) {
   //project_folder := utils.Dir() //返回的是main方法的目录
   //fmt.Printf("project_folder: %s", project_folder)
   from := path.Join(project_folder, "xlsx_templates/"+c.Folder)
-  to := path.Join(project_folder, "temp/"+strings.Trim(c.Folder,"印刷/"))
+  to := path.Join(project_folder, "temp/"+strings.Trim(c.Folder, "印刷/"))
   err := utils.CopyFolder(from, to)
   if err != nil {
     panic(err)
@@ -117,15 +118,15 @@ func Write_Print(c model.Case,n int) (s1, s2 string) {
   job := Receive_Print(n)
   //fmt.Println(job)
   // //rename file
-  oldFile := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/")+ "/" + c.Pf
-  newFile := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/") + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
+  oldFile := project_folder + "/temp/" + strings.Trim(c.Folder, "印刷/") + "/" + c.Pf
+  newFile := project_folder + "/temp/" + strings.Trim(c.Folder, "印刷/") + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
   error := utils.Rename(oldFile, newFile)
   if error != nil {
     panic(error)
   }
   //fmt.Printf("rename file %s done", oldFile)
   //rename folder
-  oldFolder := project_folder + "/temp/" + strings.Trim(c.Folder,"印刷/")
+  oldFolder := project_folder + "/temp/" + strings.Trim(c.Folder, "印刷/")
   newFolder := project_folder + "/temp/" + strings.ToUpper(job.job_number)
   error1 := utils.Rename(oldFolder, newFolder)
   //fmt.Printf("rename folder %s done", oldFolder)
@@ -140,7 +141,7 @@ func Write_Print(c model.Case,n int) (s1, s2 string) {
   utils.CreateDirIfNotExist(folder2)
 
   //开始写数据
-  newFile = project_folder + "/temp/" + strings.ToUpper(job.job_number) +"/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
+  newFile = project_folder + "/temp/" + strings.ToUpper(job.job_number) + "/" + strings.ToUpper(job.job_number) + "_DetailList_W.xlsx"
   file, error := xlsx.OpenFile(newFile)
 
   if error != nil {
@@ -165,7 +166,7 @@ func Write_Print(c model.Case,n int) (s1, s2 string) {
   file.Sheet["任务单"].Rows[4].Cells[0].SetString(string(time.Now().Format("01/02/2006")))
 
   //copy
-  return newFolder, "./" + strings.ToUpper(job.job_number) 
+  return newFolder, "./" + strings.ToUpper(job.job_number)
 }
 
 func Write_CAB(c model.Case, n int) (s1, s2 string) {
@@ -252,3 +253,4 @@ func Write_CAB(c model.Case, n int) (s1, s2 string) {
   //copy
   return newFolder, "./" + strings.ToUpper(job.job_number) + " 做稿"
 }
+const project_folder = "/Users/apple/go/src/github.com/scott-x/gcase"
